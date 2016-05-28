@@ -12,15 +12,7 @@ namespace SimpleEventSystems {
 
         private Dictionary<Type, Delegate> m_subscriberDictionary;
 
-        public EventSystem() {
-            m_subscriberDictionary = new Dictionary<Type, Delegate>();
-            LogInfo = false;
-        }
-
-        /// <summary>
-        ///     Logs non-essential information. Can be usefull for debugging.
-        /// </summary>
-        public bool LogInfo { get; set; }
+        public EventSystem() { m_subscriberDictionary = new Dictionary<Type, Delegate>(); }
 
         /// <summary>
         ///     Invokes an event, calling all subscribed methods.
@@ -39,35 +31,37 @@ namespace SimpleEventSystems {
 
             if( m_subscriberDictionary.ContainsKey( typeof( T ) ) ) {
                 Delegate[] subscribers = m_subscriberDictionary[typeof( T )].GetInvocationList();
-                if( LogInfo ) {
-                    Debug.WriteLine( "#{0}# Invoking event {1}. {2} subscribers.",
-                                     typeof( EventSystem ),
-                                     typeof( T ).Name,
-                                     subscribers.Length );
-                }
+#if LOG_INFO
+                Debug.WriteLine( "#{0}# Invoking event {1}. {2} subscribers.",
+                                 typeof( EventSystem ).Name,
+                                 typeof( T ).Name,
+                                 subscribers.Length );
+#endif
                 foreach( Delegate subscriber in subscribers ) {
-                    if( LogInfo ) {
-                        Debug.WriteLine( "#{0}# Calling subscriber {1}.{2}",
-                                         typeof( EventSystem ),
-                                         subscriber.Target.GetType().Name,
-                                         subscriber.Method.Name );
-                    }
+#if LOG_INFO
+                    Debug.WriteLine( "#{0}# Calling subscriber {1}.{2}",
+                                     typeof( EventSystem ).Name,
+                                     subscriber.Target.GetType().Name,
+                                     subscriber.Method.Name );
                     try {
                         subscriber.DynamicInvoke( eventData );
                     }
                     catch( Exception e ) {
-                        if( LogInfo ) {
-                            Debug.WriteLine( "#{0}# Exception {1} thrown during invocation." );
-                        }
+                        Debug.WriteLine( "#{0}# Exception {1} thrown during invocation.",
+                                         typeof( EventSystem ).Name,
+                                         e.GetType() );
                         throw;
                     }
+#else
+                    subscriber.DynamicInvoke( eventData );
+#endif
                 }
             }
-            else if( LogInfo ) {
-                Debug.WriteLine( "#{0}# Did not invoke event {1}, no subscribers.",
-                                 typeof( EventSystem ),
-                                 typeof( T ) );
-            }
+#if LOG_INFO
+            Debug.WriteLine( "#{0}# Did not invoke event {1}, no subscribers.",
+                             typeof( EventSystem ).Name,
+                             typeof( T ) );
+#endif
         }
 
         /// <summary>
@@ -89,6 +83,13 @@ namespace SimpleEventSystems {
                 m_subscriberDictionary.Add( typeof( T ), null );
             }
 
+#if LOG_INFO
+            Debug.WriteLine( "#{0}# Subscribing method '{1}.{2}'.",
+                             typeof( EventSystem ).Name
+                             methodTarget.Target.GetType().Name,
+                             methodTarget.Method.Name, );
+#endif
+
             m_subscriberDictionary[typeof( T )] =
                 Delegate.Combine( m_subscriberDictionary[typeof( T )], methodTarget );
         }
@@ -109,6 +110,13 @@ namespace SimpleEventSystems {
             if( methodTarget == null ) { throw new ArgumentNullException( "methodTarget" ); }
 
             if( m_subscriberDictionary.ContainsKey( typeof( T ) ) ) {
+#if LOG_INFO
+                Debug.WriteLine( "#{0}# Unsubscribing method '{1}.{2}'.",
+                                 typeof( EventSystem ).Name
+                                 methodTarget.Target.GetType().Name,
+                                 methodTarget.Method.Name, );
+#endif
+
                 m_subscriberDictionary[typeof( T )] =
                     Delegate.RemoveAll( m_subscriberDictionary[typeof( T )], methodTarget );
             }
