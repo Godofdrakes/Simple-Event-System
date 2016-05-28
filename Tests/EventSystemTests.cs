@@ -26,6 +26,15 @@ namespace Tests {
         }
 
         [ Test ]
+        public void EmptySubscribers() {
+            EventSystem eventSystem = new EventSystem();
+
+            eventSystem.InvokeEvent( new TestEvent() );
+
+            Assert.Pass( "No exceptions were encountered.\n" );
+        }
+
+        [ Test ]
         [ TestCase( 5 ) ]
         [ TestCase( 50 ) ]
         [ TestCase( 500 ) ]

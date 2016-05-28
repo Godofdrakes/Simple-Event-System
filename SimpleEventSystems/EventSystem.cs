@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 
 namespace SimpleEventSystems {
@@ -29,38 +28,33 @@ namespace SimpleEventSystems {
         public void InvokeEvent<T>( T eventData ) where T : IEvent {
             if( eventData == null ) { throw new ArgumentNullException( "eventData" ); }
 
-            if( m_subscriberDictionary.ContainsKey( typeof( T ) ) ) {
+            if( m_subscriberDictionary.ContainsKey( typeof( T ) ) &&
+                m_subscriberDictionary[typeof( T )] != null ) {
                 Delegate[] subscribers = m_subscriberDictionary[typeof( T )].GetInvocationList();
 #if LOG_INFO
-                Debug.WriteLine( "#{0}# Invoking event {1}. {2} subscribers.",
-                                 typeof( EventSystem ).Name,
-                                 typeof( T ).Name,
-                                 subscribers.Length );
+                Console.WriteLine( "#{0}# Invoking event {1}. {2} subscribers.",
+                                   typeof( EventSystem ).Name,
+                                   typeof( T ).Name,
+                                   subscribers.Length );
 #endif
                 foreach( Delegate subscriber in subscribers ) {
 #if LOG_INFO
-                    Debug.WriteLine( "#{0}# Calling subscriber {1}.{2}",
-                                     typeof( EventSystem ).Name,
-                                     subscriber.Target.GetType().Name,
-                                     subscriber.Method.Name );
-                    try {
-                        subscriber.DynamicInvoke( eventData );
-                    }
-                    catch( Exception e ) {
-                        Debug.WriteLine( "#{0}# Exception {1} thrown during invocation.",
-                                         typeof( EventSystem ).Name,
-                                         e.GetType() );
-                        throw;
-                    }
-#else
-                    subscriber.DynamicInvoke( eventData );
+                    Console.WriteLine( "#{0}# Calling subscriber {1}.{2}",
+                                       typeof( EventSystem ).Name,
+                                       subscriber.Target.GetType().Name,
+                                       subscriber.Method.Name );
 #endif
+                    subscriber.DynamicInvoke( eventData );
                 }
+#if LOG_INFO
+                Console.WriteLine( "#{0}# Finished calling subscribers.",
+                                   typeof( EventSystem ).Name );
+#endif
             }
 #if LOG_INFO
-            Debug.WriteLine( "#{0}# Did not invoke event {1}, no subscribers.",
-                             typeof( EventSystem ).Name,
-                             typeof( T ) );
+            Console.WriteLine( "#{0}# Did not invoke event {1}, no subscribers.",
+                               typeof( EventSystem ).Name,
+                               typeof( T ) );
 #endif
         }
 
@@ -84,10 +78,10 @@ namespace SimpleEventSystems {
             }
 
 #if LOG_INFO
-            Debug.WriteLine( "#{0}# Subscribing method '{1}.{2}'.",
-                             typeof( EventSystem ).Name
-                             methodTarget.Target.GetType().Name,
-                             methodTarget.Method.Name, );
+            Console.WriteLine( "#{0}# Subscribing method '{1}.{2}'.",
+                               typeof( EventSystem ).Name,
+                               methodTarget.Target.GetType().Name,
+                               methodTarget.Method.Name );
 #endif
 
             m_subscriberDictionary[typeof( T )] =
@@ -111,10 +105,10 @@ namespace SimpleEventSystems {
 
             if( m_subscriberDictionary.ContainsKey( typeof( T ) ) ) {
 #if LOG_INFO
-                Debug.WriteLine( "#{0}# Unsubscribing method '{1}.{2}'.",
-                                 typeof( EventSystem ).Name
-                                 methodTarget.Target.GetType().Name,
-                                 methodTarget.Method.Name, );
+                Console.WriteLine( "#{0}# Unsubscribing method '{1}.{2}'.",
+                                   typeof( EventSystem ).Name,
+                                   methodTarget.Target.GetType().Name,
+                                   methodTarget.Method.Name );
 #endif
 
                 m_subscriberDictionary[typeof( T )] =
