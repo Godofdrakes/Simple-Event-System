@@ -39,7 +39,7 @@ namespace SimpleEventSystems {
 #endif
                 foreach( Delegate subscriber in subscribers ) {
 #if LOG_INFO
-                    Console.WriteLine( "#{0}# Calling subscriber {1}.{2}",
+                    Console.WriteLine( "#{0}# >    Calling subscriber {1}.{2}",
                                        typeof( EventSystem ).Name,
                                        subscriber.Target.GetType().Name,
                                        subscriber.Method.Name );
@@ -47,7 +47,7 @@ namespace SimpleEventSystems {
                     subscriber.DynamicInvoke( eventData );
                 }
 #if LOG_INFO
-                Console.WriteLine( "#{0}# Finished calling subscribers.",
+                Console.WriteLine( "#{0}# >  Finished calling subscribers.",
                                    typeof( EventSystem ).Name );
 #endif
             }
