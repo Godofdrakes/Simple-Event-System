@@ -52,9 +52,11 @@ namespace SimpleEventSystems {
 #endif
             }
 #if LOG_INFO
-            Console.WriteLine( "#{0}# Did not invoke event {1}, no subscribers.",
-                               typeof( EventSystem ).Name,
-                               typeof( T ) );
+            else {
+                Console.WriteLine( "#{0}# Did not invoke event {1}, no subscribers.",
+                                   typeof( EventSystem ).Name,
+                                   typeof( T ).Name );
+            }
 #endif
         }
 
