@@ -15,16 +15,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug With Logging|Any CPU = Debug With Logging|Any CPU
 		Debug|Any CPU = Debug|Any CPU
+		Release With Logging|Any CPU = Release With Logging|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3EBCA85F-7B42-4410-A1F0-3F060CFED71E}.Debug With Logging|Any CPU.ActiveCfg = Debug With Logging|Any CPU
+		{3EBCA85F-7B42-4410-A1F0-3F060CFED71E}.Debug With Logging|Any CPU.Build.0 = Debug With Logging|Any CPU
 		{3EBCA85F-7B42-4410-A1F0-3F060CFED71E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3EBCA85F-7B42-4410-A1F0-3F060CFED71E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EBCA85F-7B42-4410-A1F0-3F060CFED71E}.Release With Logging|Any CPU.ActiveCfg = Release With Logging|Any CPU
+		{3EBCA85F-7B42-4410-A1F0-3F060CFED71E}.Release With Logging|Any CPU.Build.0 = Release With Logging|Any CPU
 		{3EBCA85F-7B42-4410-A1F0-3F060CFED71E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EBCA85F-7B42-4410-A1F0-3F060CFED71E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ED2E869-C9A2-4525-B54C-16AA8A6FFAE2}.Debug With Logging|Any CPU.ActiveCfg = Debug With Logging|Any CPU
+		{1ED2E869-C9A2-4525-B54C-16AA8A6FFAE2}.Debug With Logging|Any CPU.Build.0 = Debug With Logging|Any CPU
 		{1ED2E869-C9A2-4525-B54C-16AA8A6FFAE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1ED2E869-C9A2-4525-B54C-16AA8A6FFAE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ED2E869-C9A2-4525-B54C-16AA8A6FFAE2}.Release With Logging|Any CPU.ActiveCfg = Release With Logging|Any CPU
+		{1ED2E869-C9A2-4525-B54C-16AA8A6FFAE2}.Release With Logging|Any CPU.Build.0 = Release With Logging|Any CPU
 		{1ED2E869-C9A2-4525-B54C-16AA8A6FFAE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1ED2E869-C9A2-4525-B54C-16AA8A6FFAE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
